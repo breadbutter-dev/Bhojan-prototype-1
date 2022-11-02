@@ -14,12 +14,15 @@ import { userAction } from "../store/user";
 import { useSelector } from "react-redux";
 import Modal from "../components/Modal/Modal";
 
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { deleteItem } from "./../firebase";
 function Dashboard() {
   const dispatch = useDispatch();
 
   const itemsState = useSelector((state) => state.item.items);
-  const userStateName = useSelector((state) => state.user.name)
-  const userStateEmail = useSelector((state) => state.user.email)
+  const userStateName = useSelector((state) => state.user.name);
+  const userStateEmail = useSelector((state) => state.user.email);
 
   const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
@@ -37,10 +40,9 @@ function Dashboard() {
       const q = query(collection(db, "users"), where("uid", "==", user?.uid));
       const doc = await getDocs(q);
       const data = doc.docs[0].data();
-      console.log(data)
-      dispatch(userAction.setUserData(data))
-      setName(data.name);
 
+      dispatch(userAction.setUserData(data));
+      setName(data.name);
     } catch (err) {
       console.error(err);
       alert("An error occured while fetching user data");
@@ -53,7 +55,7 @@ function Dashboard() {
         if (data) {
           const itemsList = [];
           data.forEach((doc) => {
-            itemsList.push(doc.data());
+            itemsList.push({ ...doc.data(), id: doc.id });
           });
           dispatch(itemAction.getItems(itemsList));
           // setItems(itemsList);
@@ -69,6 +71,16 @@ function Dashboard() {
 
     fetchUserName();
   }, [user, loading]);
+
+  const deleteDocument = (object) => {
+    deleteItem(object)
+      .then((data) => {
+        dispatch(itemAction.deleteItem(object));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="dashboard">
@@ -109,12 +121,17 @@ function Dashboard() {
                 <span>
                   {selectItems && (
                     <span style={{ padding: "10px" }}>
-                      <input
+                      {/* <input
                         className="form-check-input"
                         type="checkbox"
                         value=""
                         id="flexCheckChecked"
                         checked={false}
+                      /> */}
+                      <FontAwesomeIcon
+                        style={{ color: "red", cursor: "pointer" }}
+                        icon={faTrashCan}
+                        onClick={() => deleteDocument({ ...x, id: x.id })}
                       />
                     </span>
                   )}

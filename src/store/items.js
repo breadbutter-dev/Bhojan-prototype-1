@@ -7,25 +7,22 @@ const itemSlice = createSlice({
   initialState: initialItemsState,
   reducers: {
     getItems(state, action) {
-      console.log("Get Items");
-      console.log(current(state).items);
       state.items = action.payload;
     },
     deleteItem(state, action) {
       var updatedArray = [...current(state).items];
 
       for (var i = 0; i < updatedArray.length; i++) {
-        if (updatedArray[i] === action.payload) {
+        if (updatedArray[i].id == action.payload.id) {
           updatedArray.splice(i, 1);
         }
       }
+
       state.items = updatedArray;
     },
     createItem(state, action) {
       const currentArr = current(state).items;
-      state.items = [...currentArr,action.payload];
-      console.log("Create Item")
-      console.log(state.items)
+      state.items = [...currentArr, action.payload];
     },
     updateItem(state, action) {
       const tempArray = [...state.items];

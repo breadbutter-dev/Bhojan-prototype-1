@@ -26,9 +26,6 @@ const Modal = (prop) => {
   const formSubmitHandler = (event) => {
     event.preventDefault();
 
-    console.log("Reached here");
-    console.log(itemNameInput);
-    console.log(itemUnitTypeInput);
     if (itemNameInput !== "" && itemQuantityInput > 0) {
       const obj = {
         itemName: itemNameInput,
@@ -39,9 +36,8 @@ const Modal = (prop) => {
       // Update Database
       createItem(obj)
         .then((data) => {
-          console.log(data);
           // Update state
-          dispatch(itemAction.createItem(obj));
+          dispatch(itemAction.createItem({ ...obj, id: data.id }));
           // Resetting form
           setItemNameInput("");
           setItemQuantityInput(0);
