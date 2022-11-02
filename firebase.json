@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "public",
+    "engines": {"node": "16"},
     "ignore": [
       "firebase.json",
       "**/.*",
