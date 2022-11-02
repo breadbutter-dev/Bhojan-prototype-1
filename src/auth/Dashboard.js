@@ -6,9 +6,12 @@ import { auth, db, getUserItems } from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import Navbar from "../components/Navbar/Navbar";
 
+import * as ReactDOM from "react-dom";
+
 import { useDispatch } from "react-redux";
 import { itemAction } from "../store/items";
 import { useSelector } from "react-redux";
+import Modal from "../components/Modal/Modal";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -65,8 +68,10 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <Navbar name={name}></Navbar>
-      {/* Navigation bar */}
+      {ReactDOM.createPortal(<Modal />, document.getElementById("the-modal"))}
+      {/* Modal */}
 
+      {/* Modal Ends */}
       <div className="menu-bar">
         <button
           type="button"
@@ -77,6 +82,24 @@ function Dashboard() {
         >
           {selectItems && "Unselect items"}
           {!selectItems && "Select items"}
+        </button>
+        {/* <button
+          type="button"
+          className="btn btn-outline-primary"
+          onClick={() => {
+            console.log("Create Item pressed.");
+          }}
+        >
+          Create item
+        </button> */}
+
+        <button
+          type="button"
+          className="btn btn-outline-primary"
+          data-toggle="modal"
+          data-target="#myModal"
+        >
+          Create item
         </button>
       </div>
 
