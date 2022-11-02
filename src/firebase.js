@@ -15,6 +15,8 @@ import {
   collection,
   where,
   addDoc,
+  deleteDoc,
+  doc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -95,6 +97,19 @@ const getUserItems = async (userEmail) => {
     return querySnapshot;
   }
 };
+
+const createItem = async (itemToAdd) => {
+  if (itemToAdd) {
+    const docRef = await addDoc(collection(db, "items"), itemToAdd);
+    return docRef;
+  }
+};
+const deleteItem = async (itemToDelete) => {
+  if (itemToDelete) {
+    const docRef = await deleteDoc(doc(db, "items", itemToDelete.id));
+    return docRef;
+  }
+};
 export {
   auth,
   db,
@@ -104,4 +119,6 @@ export {
   sendPasswordReset,
   logout,
   getUserItems,
+  createItem,
+  deleteItem
 };
