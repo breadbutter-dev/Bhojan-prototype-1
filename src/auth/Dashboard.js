@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
-import { auth, db, logout, getUserItems } from "../firebase";
+import { auth, db, getUserItems } from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
+import Navbar from "../components/Navbar/Navbar";
 
 function Dashboard() {
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
   const [items, setItems] = useState([]);
   const [selectItems, setSelectItems] = useState(false);
@@ -50,63 +51,8 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
+      <Navbar name={name}></Navbar>
       {/* Navigation bar */}
-      <nav className="navbar navbar-expand-md bg-dark navbar-dark">
-        <a className="navbar-brand" href="#">
-          Bhojan
-        </a>
-
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#collapsibleNavbar"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="collapsibleNavbar">
-          {/* <ul className="navbar-nav">
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
-              </a>
-            </li>
-          </ul> */}
-          <ul className="navbar-nav ml-auto">
-            {/* <li className="nav-item">
-              <div className="nav-link" style={{ color: "white" }}>
-                {name}
-              </div>
-            </li> */}
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="navbardrop"
-                data-toggle="dropdown"
-                style={{ color: "white" }}
-              >
-                {name}
-              </a>
-              <div className="dropdown-menu">
-                <div className="dropdown-item" style={{ cursor: "pointer" }}>
-                  Profile
-                </div>
-                <div className="dropdown-item" style={{ cursor: "pointer" }}>
-                  Settings
-                </div>
-                <div
-                  className="dropdown-item"
-                  style={{ cursor: "pointer" }}
-                  onClick={logout}
-                >
-                  Logout
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
 
       <div className="menu-bar">
         <button
@@ -133,7 +79,7 @@ function Dashboard() {
                 {selectItems && (
                   <span style={{ padding: "10px" }}>
                     <input
-                      class="form-check-input"
+                      className="form-check-input"
                       type="checkbox"
                       value=""
                       id="flexCheckChecked"
