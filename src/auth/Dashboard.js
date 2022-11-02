@@ -10,6 +10,7 @@ import * as ReactDOM from "react-dom";
 
 import { useDispatch } from "react-redux";
 import { itemAction } from "../store/items";
+import { userAction } from "../store/user";
 import { useSelector } from "react-redux";
 import Modal from "../components/Modal/Modal";
 
@@ -17,6 +18,8 @@ function Dashboard() {
   const dispatch = useDispatch();
 
   const itemsState = useSelector((state) => state.item.items);
+  const userStateName = useSelector((state) => state.user.name)
+  const userStateEmail = useSelector((state) => state.user.email)
 
   const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
@@ -34,8 +37,10 @@ function Dashboard() {
       const q = query(collection(db, "users"), where("uid", "==", user?.uid));
       const doc = await getDocs(q);
       const data = doc.docs[0].data();
-
+      console.log(data)
+      dispatch(userAction.setUserData(data))
       setName(data.name);
+
     } catch (err) {
       console.error(err);
       alert("An error occured while fetching user data");
@@ -83,16 +88,6 @@ function Dashboard() {
           {selectItems && "Unselect items"}
           {!selectItems && "Select items"}
         </button>
-        {/* <button
-          type="button"
-          className="btn btn-outline-primary"
-          onClick={() => {
-            console.log("Create Item pressed.");
-          }}
-        >
-          Create item
-        </button> */}
-
         <button
           type="button"
           className="btn btn-outline-primary"
@@ -102,7 +97,6 @@ function Dashboard() {
           Create item
         </button>
       </div>
-
       {/* Unordered List */}
       <ul className="list-group" style={{ margin: "10px" }}>
         {items.length > 0 &&

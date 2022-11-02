@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { itemAction } from "../../store/items";
 import { createItem } from "./../../firebase";
+import { useSelector } from "react-redux";
 
 const Modal = (prop) => {
   const dispatch = useDispatch();
+
+  const userStateEmail = useSelector((state) => state.user.email);
 
   const [itemNameInput, setItemNameInput] = useState("");
   const [itemQuantityInput, setItemQuantityInput] = useState(0);
@@ -31,7 +34,7 @@ const Modal = (prop) => {
         itemName: itemNameInput,
         quantity: parseFloat(itemQuantityInput),
         unitName: itemUnitTypeInput,
-        creatorEmail: "rishabbahal@gmail.com",
+        creatorEmail: userStateEmail,
       };
       // Update Database
       createItem(obj)
@@ -105,9 +108,6 @@ const Modal = (prop) => {
             >
               Create
             </button>
-            {/* <button type="button" className="btn btn-outline-danger" data-dismiss="modal">
-              Close
-            </button> */}
           </div>
         </div>
       </div>
