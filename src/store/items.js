@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialItemsState = { items: [] };
 
@@ -7,10 +7,12 @@ const itemSlice = createSlice({
   initialState: initialItemsState,
   reducers: {
     getItems(state, action) {
+      console.log("Get Items");
+      console.log(current(state).items);
       state.items = action.payload;
     },
     deleteItem(state, action) {
-      var updatedArray = [...state.items];
+      var updatedArray = [...current(state).items];
 
       for (var i = 0; i < updatedArray.length; i++) {
         if (updatedArray[i] === action.payload) {
@@ -20,7 +22,10 @@ const itemSlice = createSlice({
       state.items = updatedArray;
     },
     createItem(state, action) {
-      state.items = state.items.push(action.payload);
+      const currentArr = current(state).items;
+      state.items = [...currentArr,action.payload];
+      console.log("Create Item")
+      console.log(state.items)
     },
     updateItem(state, action) {
       const tempArray = [...state.items];

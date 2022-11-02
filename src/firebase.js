@@ -95,6 +95,13 @@ const getUserItems = async (userEmail) => {
     return querySnapshot;
   }
 };
+
+const createItem = async (itemToAdd) => {
+  if (itemToAdd) {
+    const docRef = await addDoc(collection(db, "items"), itemToAdd);
+    return docRef;
+  }
+};
 export {
   auth,
   db,
@@ -104,4 +111,5 @@ export {
   sendPasswordReset,
   logout,
   getUserItems,
+  createItem
 };

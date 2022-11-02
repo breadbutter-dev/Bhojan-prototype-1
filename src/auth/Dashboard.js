@@ -105,35 +105,36 @@ function Dashboard() {
 
       {/* Unordered List */}
       <ul className="list-group" style={{ margin: "10px" }}>
-        {items.map((x, index) => {
-          return (
-            <li
-              className="list-group-item d-flex justify-content-between align-items-center"
-              key={index}
-            >
-              <span>
-                {selectItems && (
-                  <span style={{ padding: "10px" }}>
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckChecked"
-                      checked={false}
-                    />
-                  </span>
-                )}
-                <strong>{x.itemName}</strong>{" "}
-                {x.unitName !== "count" && x.unitName}
-              </span>
-              <span>
-                <span className="badge badge-primary badge-pill">
-                  {x.quantity}
+        {items.length > 0 &&
+          items.map((x, index) => {
+            return (
+              <li
+                className="list-group-item d-flex justify-content-between align-items-center"
+                key={index}
+              >
+                <span>
+                  {selectItems && (
+                    <span style={{ padding: "10px" }}>
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="flexCheckChecked"
+                        checked={false}
+                      />
+                    </span>
+                  )}
+                  <strong>{x.itemName}</strong>{" "}
+                  {x.unitName !== "count" && x.unitName}
                 </span>
-              </span>
-            </li>
-          );
-        })}
+                <span>
+                  <span className="badge badge-primary badge-pill">
+                    {x.quantity}
+                  </span>
+                </span>
+              </li>
+            );
+          })}
       </ul>
     </div>
   );
