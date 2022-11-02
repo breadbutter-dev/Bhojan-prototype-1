@@ -6,11 +6,23 @@ import { auth, db, getUserItems } from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import Navbar from "../components/Navbar/Navbar";
 
+import { useDispatch } from "react-redux";
+import { itemAction } from "../store/items";
+import { useSelector } from "react-redux";
+
 function Dashboard() {
+  const dispatch = useDispatch();
+
+  const itemsState = useSelector((state) => state.item.items);
+
   const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
   const [items, setItems] = useState([]);
   const [selectItems, setSelectItems] = useState(false);
+
+  useEffect(() => {
+    setItems(itemsState);
+  }, [itemsState]);
 
   const navigate = useNavigate();
 
@@ -35,7 +47,8 @@ function Dashboard() {
           data.forEach((doc) => {
             itemsList.push(doc.data());
           });
-          setItems(itemsList);
+          dispatch(itemAction.getItems(itemsList));
+          // setItems(itemsList);
         }
       })
       .catch((err) => {
