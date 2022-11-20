@@ -1,24 +1,34 @@
 import React from "react";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { reduceItemQuantity } from "../../services/item.service";
+import { updateItem } from "../../services/item.service";
 import { useDispatch } from "react-redux";
 import "./Inventory.css";
 import { itemAction } from "../../store/items";
+
 const Inventory = (props) => {
   const dispatch = useDispatch();
   const reduceItemQuantitybyOne = (event, item) => {
-    reduceItemQuantity(item)
+    const updatedItemObject = { ...item, quantity: item.quantity - 1 };
+    updateItem(updatedItemObject)
       .then((resp) => {
-        console.log(resp);
-        dispatch(
-          itemAction.updateItem({ ...item, quantity: item.quantity - 1 })
-        );
+        dispatch(itemAction.updateItem(updatedItemObject));
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  const increaseItemQuantitybyOne = (event, item) => {
+    const updatedItemObject = { ...item, quantity: item.quantity + 1 };
+    updateItem(updatedItemObject)
+      .then((resp) => {
+        dispatch(itemAction.updateItem(updatedItemObject));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="col-lg-4 col-md-4">
       <div className="title">
@@ -64,6 +74,14 @@ const Inventory = (props) => {
                   <span className="badge badge-primary badge-pill">
                     {x.quantity}
                   </span>
+                  <button
+                    className="btn btn-default"
+                    onClick={(event) => {
+                      increaseItemQuantitybyOne(event, x);
+                    }}
+                  >
+                    +
+                  </button>
                 </span>
               </li>
             );

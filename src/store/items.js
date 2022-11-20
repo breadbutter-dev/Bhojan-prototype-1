@@ -17,7 +17,6 @@ const itemSlice = createSlice({
           updatedArray.splice(i, 1);
         }
       }
-
       state.items = updatedArray;
     },
     createItem(state, action) {
@@ -29,7 +28,6 @@ const itemSlice = createSlice({
       const modifiedArray = tempArray.map((item) => {
         return item.id === action.payload.id ? { ...action.payload } : item;
       });
-
       state.items = [...modifiedArray];
     },
   },

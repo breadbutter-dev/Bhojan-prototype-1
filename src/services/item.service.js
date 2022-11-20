@@ -57,9 +57,4 @@ const updateItem = async (itemToUpdate) => {
   }
 };
 
-const reduceItemQuantity = async (item) => {
-  const updatedItemObject = { ...item, quantity: item.quantity - 1 };
-  updateItem({...updatedItemObject})
-};
-
-export { getUserItems, createItem, deleteItem, updateItem, reduceItemQuantity };
+export { getUserItems, createItem, deleteItem, updateItem };
