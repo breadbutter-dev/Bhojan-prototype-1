@@ -10,7 +10,10 @@ const ToBuy = (props) => {
   const dispatch = useDispatch();
 
   const addToInventory = (item) => {
-    const modifiedItemObject = { ...item, listType: "inInventory", quantity: 1 };
+    const modifiedItemObject =
+      item.quantity === 0
+        ? { ...item, listType: "inInventory", quantity: 1 }
+        : { ...item, listType: "inInventory" };
     updateItem(modifiedItemObject)
       .then((resp) => {
         dispatch(itemAction.updateItem(modifiedItemObject));
