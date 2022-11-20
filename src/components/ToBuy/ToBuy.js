@@ -2,8 +2,33 @@ import React from "react";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./ToBuy.css";
+import { useDispatch } from "react-redux";
+import { updateItem } from "../../services/item.service";
+import { itemAction } from "../../store/items";
 
 const ToBuy = (props) => {
+  const dispatch = useDispatch();
+
+  const addToInventory = (item) => {
+    const modifiedItemObject = { ...item, listType: "inInventory", quantity: 1 };
+    updateItem(modifiedItemObject)
+      .then((resp) => {
+        dispatch(itemAction.updateItem(modifiedItemObject));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const addToArchive = (item) => {
+    const modifiedItemObject = { ...item, listType: "archived" };
+    updateItem(modifiedItemObject)
+      .then((resp) => {
+        dispatch(itemAction.updateItem(modifiedItemObject));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="col-lg-4 col-md-4">
       <div className="title">
@@ -20,13 +45,6 @@ const ToBuy = (props) => {
                 <span>
                   {props.selectItems && (
                     <span style={{ padding: "10px" }}>
-                      {/* <input
-                            className="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="flexCheckChecked"
-                            checked={false}
-                          /> */}
                       <FontAwesomeIcon
                         style={{ color: "red", cursor: "pointer" }}
                         icon={faTrashCan}
@@ -37,10 +55,30 @@ const ToBuy = (props) => {
                   <strong>{x.itemName}</strong>{" "}
                   {x.unitName !== "count" && x.unitName}
                 </span>
+                <br />
+
                 <span>
-                  <span className="badge badge-primary badge-pill">
+                  {/* <span className="badge badge-primary badge-pill">
                     {x.quantity}
-                  </span>
+                  </span> */}
+                  <button
+                    className="btn btn-outline-info"
+                    style={{ marginLeft: "10px" }}
+                    onClick={(event) => {
+                      addToInventory(x);
+                    }}
+                  >
+                    &#10004;
+                  </button>
+                  <button
+                    className="btn btn-outline-danger"
+                    style={{ marginLeft: "10px" }}
+                    onClick={(event) => {
+                      addToArchive(x);
+                    }}
+                  >
+                    &#x274C;
+                  </button>
                 </span>
               </li>
             ) : null;

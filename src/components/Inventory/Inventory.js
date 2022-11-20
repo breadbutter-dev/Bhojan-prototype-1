@@ -9,7 +9,11 @@ import { itemAction } from "../../store/items";
 const Inventory = (props) => {
   const dispatch = useDispatch();
   const reduceItemQuantitybyOne = (item) => {
-    const updatedItemObject = { ...item, quantity: item.quantity - 1 };
+    const reducedItemQuantity = item.quantity - 1;
+    const updatedItemObject =
+      reducedItemQuantity == 0
+        ? { ...item, quantity: reducedItemQuantity, listType: "archived" }
+        : { ...item, quantity: reducedItemQuantity };
     updateItem(updatedItemObject)
       .then((resp) => {
         dispatch(itemAction.updateItem(updatedItemObject));
