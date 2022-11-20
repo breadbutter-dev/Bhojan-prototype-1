@@ -8,7 +8,7 @@ import { itemAction } from "../../store/items";
 
 const Inventory = (props) => {
   const dispatch = useDispatch();
-  const reduceItemQuantitybyOne = (event, item) => {
+  const reduceItemQuantitybyOne = (item) => {
     const updatedItemObject = { ...item, quantity: item.quantity - 1 };
     updateItem(updatedItemObject)
       .then((resp) => {
@@ -66,7 +66,7 @@ const Inventory = (props) => {
                   <button
                     className="btn btn-default"
                     onClick={(event) => {
-                      reduceItemQuantitybyOne(event, x);
+                      reduceItemQuantitybyOne(x);
                     }}
                   >
                     -
