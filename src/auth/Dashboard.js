@@ -14,9 +14,9 @@ import { userAction } from "../store/user";
 import { useSelector } from "react-redux";
 import Modal from "../components/Modal/Modal";
 
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deleteItem } from "./../firebase";
+import Inventory from "../components/Inventory/Inventory";
+
 function Dashboard() {
   const dispatch = useDispatch();
 
@@ -85,14 +85,18 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <Navbar name={name}></Navbar>
-      {ReactDOM.createPortal(<Modal />, document.getElementById("the-modal"))}
       {/* Modal */}
-
+      {ReactDOM.createPortal(<Modal />, document.getElementById("the-modal"))}
       {/* Modal Ends */}
+      {/* Search bar */}
+      <div className="input-group mb-3 col-sm-10 col-md-6 col-lg-4" id="search-bar">
+        <input type="text" className="form-control" placeholder="Search" />
+      </div>
+      {/* Search bar ends*/}
       <div className="menu-bar">
         <button
           type="button"
-          className="btn btn-outline-secondary"
+          className="btn btn-outline-secondary menu-button"
           onClick={() => {
             setSelectItems(!selectItems);
           }}
@@ -102,51 +106,22 @@ function Dashboard() {
         </button>
         <button
           type="button"
-          className="btn btn-outline-primary"
+          className="btn btn-outline-primary menu-button"
           data-toggle="modal"
           data-target="#myModal"
         >
           Create item
         </button>
       </div>
+
+      {/* Inventory */}
+      <Inventory
+        items={items}
+        selectItems={selectItems}
+        deleteDocument={deleteDocument}
+      />
+
       {/* Unordered List */}
-      <ul className="list-group" style={{ margin: "10px" }}>
-        {items.length > 0 &&
-          items.map((x, index) => {
-            return (
-              <li
-                className="list-group-item d-flex justify-content-between align-items-center"
-                key={index}
-              >
-                <span>
-                  {selectItems && (
-                    <span style={{ padding: "10px" }}>
-                      {/* <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="flexCheckChecked"
-                        checked={false}
-                      /> */}
-                      <FontAwesomeIcon
-                        style={{ color: "red", cursor: "pointer" }}
-                        icon={faTrashCan}
-                        onClick={() => deleteDocument({ ...x, id: x.id })}
-                      />
-                    </span>
-                  )}
-                  <strong>{x.itemName}</strong>{" "}
-                  {x.unitName !== "count" && x.unitName}
-                </span>
-                <span>
-                  <span className="badge badge-primary badge-pill">
-                    {x.quantity}
-                  </span>
-                </span>
-              </li>
-            );
-          })}
-      </ul>
     </div>
   );
 }
