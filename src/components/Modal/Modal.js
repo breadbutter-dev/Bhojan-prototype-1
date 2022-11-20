@@ -32,6 +32,7 @@ const Modal = (prop) => {
         quantity: parseFloat(itemQuantityInput),
         unitName: itemUnitTypeInput,
         creatorEmail: userStateEmail,
+        listType: "toBuy",
       };
       // Update Database
       createItem(obj)
