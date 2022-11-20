@@ -13,7 +13,7 @@ const itemSlice = createSlice({
       var updatedArray = [...current(state).items];
 
       for (var i = 0; i < updatedArray.length; i++) {
-        if (updatedArray[i].id == action.payload.id) {
+        if (updatedArray[i].id === action.payload.id) {
           updatedArray.splice(i, 1);
         }
       }
