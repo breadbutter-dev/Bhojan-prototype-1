@@ -1,5 +1,5 @@
 import React from "react";
-import { logout } from "../../firebase";
+import { logout } from "../../services/auth.service";
 import { useSelector } from "react-redux";
 
 const Navbar = (props) => {

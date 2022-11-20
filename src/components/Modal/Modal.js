@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { itemAction } from "../../store/items";
-import { createItem } from "./../../firebase";
+import { createItem } from "../../services/item.service";
 import { useSelector } from "react-redux";
 
 const Modal = (prop) => {

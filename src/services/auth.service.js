@@ -15,8 +15,6 @@ import {
   collection,
   where,
   addDoc,
-  deleteDoc,
-  doc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -87,29 +85,7 @@ const logout = () => {
   signOut(auth);
 };
 
-const getUserItems = async (userEmail) => {
-  if (userEmail !== "") {
-    const q = query(
-      collection(db, "items"),
-      where("creatorEmail", "==", userEmail)
-    );
-    const querySnapshot = await getDocs(q);
-    return querySnapshot;
-  }
-};
 
-const createItem = async (itemToAdd) => {
-  if (itemToAdd) {
-    const docRef = await addDoc(collection(db, "items"), itemToAdd);
-    return docRef;
-  }
-};
-const deleteItem = async (itemToDelete) => {
-  if (itemToDelete) {
-    const docRef = await deleteDoc(doc(db, "items", itemToDelete.id));
-    return docRef;
-  }
-};
 export {
   auth,
   db,
@@ -118,7 +94,4 @@ export {
   registerWithEmailAndPassword,
   sendPasswordReset,
   logout,
-  getUserItems,
-  createItem,
-  deleteItem
 };

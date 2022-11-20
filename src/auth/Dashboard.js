@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
-import { auth, db, getUserItems } from "../firebase";
+import { auth, db } from "../services/auth.service";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import Navbar from "../components/Navbar/Navbar";
 
@@ -14,7 +14,7 @@ import { userAction } from "../store/user";
 import { useSelector } from "react-redux";
 import Modal from "../components/Modal/Modal";
 
-import { deleteItem } from "./../firebase";
+import { deleteItem, getUserItems } from "../services/item.service";
 import Inventory from "../components/Inventory/Inventory";
 import ToBuy from "../components/ToBuy/ToBuy";
 import Archived from "../components/Archived/Archived";
@@ -23,8 +23,8 @@ function Dashboard() {
   const dispatch = useDispatch();
 
   const itemsState = useSelector((state) => state.item.items);
-  const userStateName = useSelector((state) => state.user.name);
-  const userStateEmail = useSelector((state) => state.user.email);
+  // const userStateName = useSelector((state) => state.user.name);
+  // const userStateEmail = useSelector((state) => state.user.email);
 
   const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
@@ -118,7 +118,7 @@ function Dashboard() {
           Create item
         </button>
       </div>
-      <div style={{display: 'flex', flexWrap: 'wrap'}}>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
         {/* Inventory */}
         <Inventory
           items={items}
