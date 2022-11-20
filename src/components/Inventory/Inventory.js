@@ -1,10 +1,24 @@
 import React from "react";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { reduceItemQuantity } from "../../services/item.service";
+import { useDispatch } from "react-redux";
 import "./Inventory.css";
-
+import { itemAction } from "../../store/items";
 const Inventory = (props) => {
+  const dispatch = useDispatch();
+  const reduceItemQuantitybyOne = (event, item) => {
+    reduceItemQuantity(item)
+      .then((resp) => {
+        console.log(resp);
+        dispatch(
+          itemAction.updateItem({ ...item, quantity: item.quantity - 1 })
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="col-lg-4 col-md-4">
       <div className="title">
@@ -39,6 +53,14 @@ const Inventory = (props) => {
                   {x.unitName !== "count" && x.unitName}
                 </span>
                 <span>
+                  <button
+                    className="btn btn-default"
+                    onClick={(event) => {
+                      reduceItemQuantitybyOne(event, x);
+                    }}
+                  >
+                    -
+                  </button>
                   <span className="badge badge-primary badge-pill">
                     {x.quantity}
                   </span>

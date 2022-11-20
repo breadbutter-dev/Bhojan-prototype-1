@@ -25,12 +25,12 @@ const itemSlice = createSlice({
       state.items = [...currentArr, action.payload];
     },
     updateItem(state, action) {
-      const tempArray = [...state.items];
-      tempArray.map((item) => {
-        if (item.id === action.payload.id) {
-          return { ...action.payload };
-        }
+      const tempArray = [...current(state).items];
+      const modifiedArray = tempArray.map((item) => {
+        return item.id === action.payload.id ? { ...action.payload } : item;
       });
+
+      state.items = [...modifiedArray];
     },
   },
 });

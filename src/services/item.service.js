@@ -7,6 +7,7 @@ import {
   where,
   addDoc,
   deleteDoc,
+  updateDoc,
   doc,
 } from "firebase/firestore";
 
@@ -47,4 +48,18 @@ const deleteItem = async (itemToDelete) => {
   }
 };
 
-export { getUserItems, createItem, deleteItem };
+const updateItem = async (itemToUpdate) => {
+  if (itemToUpdate) {
+    const docRef = await updateDoc(doc(db, "items", itemToUpdate.id), {
+      ...itemToUpdate,
+    });
+    return docRef;
+  }
+};
+
+const reduceItemQuantity = async (item) => {
+  const updatedItemObject = { ...item, quantity: item.quantity - 1 };
+  updateItem({...updatedItemObject})
+};
+
+export { getUserItems, createItem, deleteItem, updateItem, reduceItemQuantity };
