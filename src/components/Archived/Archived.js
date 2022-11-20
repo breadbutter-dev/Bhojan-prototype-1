@@ -12,7 +12,8 @@ const Archived = (props) => {
       <ul className="list-group" style={{ margin: "10px" }}>
         {props.items.length > 0 &&
           props.items.map((x, index) => {
-            return (
+            // Show item in archived if listType doesn't exis in item or list type is 'archived'
+            return !x.listType || x.listType === "archived" ? (
               <li
                 className="list-group-item d-flex justify-content-between align-items-center"
                 key={index}
@@ -38,12 +39,15 @@ const Archived = (props) => {
                   {x.unitName !== "count" && x.unitName}
                 </span>
                 <span>
-                  <span className="badge badge-primary badge-pill">
+                  {/* <span className="badge badge-primary badge-pill">
                     {x.quantity}
-                  </span>
+                  </span> */}
+                  <button class="btn btn-warning">
+                    &#x2190; Move to To Buy
+                  </button>
                 </span>
               </li>
-            );
+            ) : null;
           })}
       </ul>
     </div>

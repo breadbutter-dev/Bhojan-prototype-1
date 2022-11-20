@@ -37,7 +37,7 @@ const Inventory = (props) => {
       <ul className="list-group" style={{ margin: "10px" }}>
         {props.items.length > 0 &&
           props.items.map((x, index) => {
-            return (
+            return x.listType === "inInventory" ? (
               <li
                 className="list-group-item d-flex justify-content-between align-items-center"
                 key={index}
@@ -84,7 +84,7 @@ const Inventory = (props) => {
                   </button>
                 </span>
               </li>
-            );
+            ) : null;
           })}
       </ul>
     </div>
