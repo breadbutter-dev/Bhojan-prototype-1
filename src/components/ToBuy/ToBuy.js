@@ -1,14 +1,13 @@
 import React from "react";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./ToBuy.css";
 
-import "./Inventory.css";
-
-const Inventory = (props) => {
+const ToBuy = (props) => {
   return (
     <div className="col-lg-4 col-md-4">
       <div className="title">
-        <h3>Inventory</h3>
+        <h3>To buy</h3>
       </div>
       <ul className="list-group" style={{ margin: "10px" }}>
         {props.items.length > 0 &&
@@ -22,12 +21,12 @@ const Inventory = (props) => {
                   {props.selectItems && (
                     <span style={{ padding: "10px" }}>
                       {/* <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="flexCheckChecked"
-                        checked={false}
-                      /> */}
+                            className="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckChecked"
+                            checked={false}
+                          /> */}
                       <FontAwesomeIcon
                         style={{ color: "red", cursor: "pointer" }}
                         icon={faTrashCan}
@@ -51,4 +50,4 @@ const Inventory = (props) => {
   );
 };
 
-export default Inventory;
+export default ToBuy;

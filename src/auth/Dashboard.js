@@ -16,6 +16,7 @@ import Modal from "../components/Modal/Modal";
 
 import { deleteItem } from "./../firebase";
 import Inventory from "../components/Inventory/Inventory";
+import ToBuy from "../components/ToBuy/ToBuy";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -89,7 +90,10 @@ function Dashboard() {
       {ReactDOM.createPortal(<Modal />, document.getElementById("the-modal"))}
       {/* Modal Ends */}
       {/* Search bar */}
-      <div className="input-group mb-3 col-sm-10 col-md-6 col-lg-4" id="search-bar">
+      <div
+        className="input-group mb-3 col-sm-10 col-md-6 col-lg-4"
+        id="search-bar"
+      >
         <input type="text" className="form-control" placeholder="Search" />
       </div>
       {/* Search bar ends*/}
@@ -113,13 +117,20 @@ function Dashboard() {
           Create item
         </button>
       </div>
-
-      {/* Inventory */}
-      <Inventory
-        items={items}
-        selectItems={selectItems}
-        deleteDocument={deleteDocument}
-      />
+      <div style={{display: 'flex', flexWrap: 'wrap'}}>
+        {/* Inventory */}
+        <Inventory
+          items={items}
+          selectItems={selectItems}
+          deleteDocument={deleteDocument}
+        />
+        {/* To Buy */}
+        <ToBuy
+          items={items}
+          selectItems={selectItems}
+          deleteDocument={deleteDocument}
+        />
+      </div>
 
       {/* Unordered List */}
     </div>
