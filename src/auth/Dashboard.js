@@ -17,6 +17,7 @@ import Modal from "../components/Modal/Modal";
 import { deleteItem } from "./../firebase";
 import Inventory from "../components/Inventory/Inventory";
 import ToBuy from "../components/ToBuy/ToBuy";
+import Archived from "../components/Archived/Archived";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -126,6 +127,12 @@ function Dashboard() {
         />
         {/* To Buy */}
         <ToBuy
+          items={items}
+          selectItems={selectItems}
+          deleteDocument={deleteDocument}
+        />
+        {/* Archived */}
+        <Archived
           items={items}
           selectItems={selectItems}
           deleteDocument={deleteDocument}
