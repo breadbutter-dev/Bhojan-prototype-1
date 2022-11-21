@@ -66,7 +66,7 @@ const Inventory = (props) => {
                   <strong>{x.itemName}</strong>{" "}
                   {x.unitName !== "count" && x.unitName}
                 </span>
-                <span>
+                {/* <span>
                   <button
                     className="btn btn-default"
                     onClick={(event) => {
@@ -86,7 +86,7 @@ const Inventory = (props) => {
                   >
                     +
                   </button>
-                </span>
+                </span> */}
               </li>
             ) : null;
           })}
