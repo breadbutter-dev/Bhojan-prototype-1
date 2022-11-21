@@ -29,6 +29,7 @@ function Dashboard() {
   const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
   const [items, setItems] = useState([]);
+  const [suggestedItems, setSuggestedItems] = useState([]);
   const [selectItems, setSelectItems] = useState(false);
 
   useEffect(() => {
@@ -83,6 +84,22 @@ function Dashboard() {
         console.log(err);
       });
   };
+  const backupItems = [...items];
+  const filterBySearch = (event) => {
+    console.log("filterBySearch");
+    // Access input value
+    const query = event.target.value;
+    if(query==="") return setSuggestedItems([])
+    // Create copy of item list
+    // Include all elements which includes the search query
+    var updatedList = items.filter((item) => {
+      if (item.itemName.toLowerCase().includes(query.toLowerCase()))
+        return item;
+    });
+    // Trigger render with updated values
+    if (updatedList.length == 0) setSuggestedItems(backupItems);
+    else setSuggestedItems(updatedList);
+  };
 
   return (
     <div className="dashboard">
@@ -95,7 +112,12 @@ function Dashboard() {
         className="input-group mb-3 col-sm-10 col-md-6 col-lg-4"
         id="search-bar"
       >
-        <input type="text" className="form-control" placeholder="Search" />
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search"
+          onChange={filterBySearch}
+        />
       </div>
       {/* Search bar ends*/}
       <div className="menu-bar">
@@ -122,18 +144,21 @@ function Dashboard() {
         {/* Inventory */}
         <Inventory
           items={items}
+          suggestedItems={suggestedItems}
           selectItems={selectItems}
           deleteDocument={deleteDocument}
         />
         {/* To Buy */}
         <ToBuy
           items={items}
+          suggestedItems={suggestedItems}
           selectItems={selectItems}
           deleteDocument={deleteDocument}
         />
         {/* Archived */}
         <Archived
           items={items}
+          suggestedItems={suggestedItems}
           selectItems={selectItems}
           deleteDocument={deleteDocument}
         />
