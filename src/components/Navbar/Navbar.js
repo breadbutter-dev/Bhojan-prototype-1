@@ -11,7 +11,7 @@ const Navbar = (props) => {
 
   return (
     <nav className="navbar navbar-expand-md bg-dark navbar-dark">
-      <a className="navbar-brand">Bhojan <span style={{fontSize: '8px'}}>V{process.env.REACT_APP_VERSION}</span></a>
+      <a className="navbar-brand">भोजन <span style={{fontSize: '8px'}}>V{process.env.REACT_APP_VERSION}</span></a>
 
       <button
         className="navbar-toggler"

@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../services/auth.service";
+import {
+  auth,
+  logInWithEmailAndPassword,
+  signInWithGoogle,
+} from "../services/auth.service";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./Login.css";
 
@@ -21,6 +25,18 @@ function Login() {
   return (
     <div className="login">
       <div className="login__container">
+        <div
+          style={{
+            padding: "8px 10px",
+            margin: "10px",
+          }}
+        >
+          <h3>
+            भोजन 
+            {/* Bhojan */}
+            <span style={{fontSize: '15px'}}>v{process.env.REACT_APP_VERSION}</span>
+          </h3>
+        </div>
         <input
           type="text"
           className="login__textBox"
